@@ -1,5 +1,5 @@
 //Import the THREE.js library
-import * as THREE from "three.module.js";
+import * as THREE from "./three.module.js";
 // https://raw.githubusercontent.com/mrdoob/three.js/refs/heads/dev/build/three.module.js
 // https://cdn.skypack.dev/three@0.129.0/build/three.module.js
 // https://raw.githubusercontent.com/mrdoob/three.js/r129/build/three.module.js
@@ -132,6 +132,7 @@ document.onmousemove = (e) => {
 
 //Start the 3D rendering
 animate();
+
 
 
 
