@@ -7,6 +7,10 @@ self.addEventListener('install', event => {
 		'./index.html',
 		'./script.js',
 		'./style.css',
+		// THREEJS
+		'./three.module.js',
+  		'./examples/OrbitControls.js',
+  		'./examples/GLTFLoader.js',
 		// Dino model
 		'./models/dino/scene.gltf',
 		'./models/dino/scene.bin',
@@ -29,3 +33,4 @@ self.addEventListener('fetch', event => {
     caches.match(event.request).then(resp => resp || fetch(event.request))
   );
 });
+
