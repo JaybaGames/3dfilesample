@@ -9,7 +9,8 @@ import { OrbitControls } from "./examples/OrbitControls.js";
 // https://cdn.skypack.dev/three@0.129.0/examples/jsm/controls/OrbitControls.js";
 
 // To allow for importing the .gltf file
-import { GLTFLoader } from "https://cdn.skypack.dev/three@0.129.0/examples/jsm/loaders/GLTFLoader.js";
+import { GLTFLoader } from "./examples/GLTFLoader.js";
+// https://cdn.skypack.dev/three@0.129.0/examples/jsm/loaders/GLTFLoader.js";
 
 //Create a Three.JS Scene
 const scene = new THREE.Scene();
@@ -134,6 +135,7 @@ document.onmousemove = (e) => {
 
 //Start the 3D rendering
 animate();
+
 
 
 
