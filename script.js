@@ -99,7 +99,7 @@ scene.add(topLight);
 
 const ambientLight = new THREE.AmbientLight(0x333333, objToRender === "dino" ? 5 : 1);
 scene.add(ambientLight);
-scene.background = new THREE.Color(0x999999);
+scene.background = new THREE.Color(0x9999cc);
 
 //This adds controls to the camera, so we can rotate / zoom it with the mouse
 if (objToRender === "dino") {
@@ -135,6 +135,7 @@ document.onmousemove = (e) => {
 
 //Start the 3D rendering
 animate();
+
 
 
 
