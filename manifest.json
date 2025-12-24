@@ -1,6 +1,6 @@
 {
-  "name": "ThreeJS Offline Game",
-  "short_name": "ThreeJS Game",
+  "name": "Farmee Game",
+  "short_name": "Farmee",
   "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#000000",
