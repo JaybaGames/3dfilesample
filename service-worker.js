@@ -1,4 +1,6 @@
 // service-worker.js
+
+/*
 self.addEventListener('install', event => {
   event.waitUntil(
     caches.open('my-cache').then(cache => {
@@ -33,3 +35,5 @@ self.addEventListener('fetch', event => {
     caches.match(event.request).then(resp => resp || fetch(event.request))
   );
 });
+
+*/
