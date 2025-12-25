@@ -102,6 +102,14 @@ loader.load(
   function (gltf) {
     //If the file is loaded, add it to the scene
     object = gltf.scene;
+	
+	object.traverse((child) => {
+    if (child.isMesh) {
+      child.castShadow = true;
+      child.receiveShadow = true; // optional
+    }
+  });
+	
     scene.add(object);
   },
   function (xhr) {
@@ -117,6 +125,8 @@ loader.load(
 //Instantiate a new renderer and set its size
 const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true }); //Alpha: true allows for the transparent background
 renderer.setSize(window.innerWidth, window.innerHeight);
+renderer.shadowMap.enabled = true;
+renderer.shadowMap.type = THREE.PCFSoftShadowMap; // soft & realistic
 
 //Add the renderer to the DOM
 document.getElementById("container3D").appendChild(renderer.domElement);
@@ -130,9 +140,6 @@ topLight.position.set(500, 500, 500) //top-left-ish
 topLight.castShadow = true;
 scene.add(topLight);
 
-const ambientLight = new THREE.AmbientLight(0x333333, objToRender === "dino" ? 5 : 1);
-scene.add(ambientLight);
-scene.background = new THREE.Color(0xccbbcc);
 
 //This adds controls to the camera, so we can rotate / zoom it with the mouse
 if (objToRender === "dino") {
@@ -141,30 +148,7 @@ if (objToRender === "dino") {
 
 const clock = new THREE.Clock();
 //Render the scene
-function animate() {
-  requestAnimationFrame(animate);
-  //Here we could add some code to update the scene, adding some automatic movement
 
-	const t = clock.getElapsedTime();
-
-	if(object){
-		if(object.scale){
-	object.scale.y = 1 + Math.sin(t * 2) * 0.1;
-  object.scale.x = 1 - Math.sin(t * 2) * 0.05;
-  object.scale.z = 1 - Math.sin(t * 2) * 0.05;
-		}
-	}
-
-  //Make the eye move
-  if (object && objToRender === "eye") {
-    //I've played with the constants here until it looked good 
-    object.rotation.y = -3 + mouseX / window.innerWidth * 3;
-    object.rotation.x = -1.2 + mouseY * 2.5 / window.innerHeight;
-  }
-  renderer.render(scene, camera);
-  
-  
-}
 
 //Add a listener to the window, so we can resize the window and the camera
 window.addEventListener("resize", function () {
@@ -179,8 +163,7 @@ document.onmousemove = (e) => {
   mouseY = e.clientY;
 }
 
-//Start the 3D rendering
-animate();
+
 
 // Example "world data" structure
 let worldData = {
@@ -249,6 +232,7 @@ loadBtn.addEventListener('click', async () => {
           loadedData.objectRotation.z
         );
       }
+	  
 
       scene.add(object);
     });
@@ -258,3 +242,89 @@ loadBtn.addEventListener('click', async () => {
     alert('Failed to load world.');
   }
 });
+
+import { Sky } from './examples/Sky.js';
+
+const sky = new Sky();
+sky.scale.setScalar(10000);
+scene.add(sky);
+
+const planeG = new THREE.PlaneGeometry(100, 100);
+const planeM = new THREE.MeshStandardMaterial({color: "brown"});
+planeM.side = THREE.DoubleSide;
+const plane = new THREE.Mesh(planeG, planeM);
+plane.rotation.x = Math.PI/2;
+plane.position.y = -5;
+plane.receiveShadow = true;
+scene.add(plane);
+
+const sun = new THREE.Vector3();
+
+const skyUniforms = sky.material.uniforms;
+skyUniforms['turbidity'].value = 0.7;
+skyUniforms['rayleigh'].value = 0.5;
+skyUniforms['mieCoefficient'].value = 0.005;
+skyUniforms['mieDirectionalG'].value = 0.8;
+
+let time = 0; // 0 → 1 (day cycle)
+
+function updateSun() {
+  time += 0.00003; // speed
+  if (time > 1) time = 0;
+
+  const phi = THREE.MathUtils.degToRad(90 - time * 180);
+  const theta = THREE.MathUtils.degToRad(180);
+
+  sun.setFromSphericalCoords(1, phi, theta);
+  sky.material.uniforms['sunPosition'].value.copy(sun);
+
+
+}
+
+const sunLight = new THREE.DirectionalLight(0xffffff, 1);
+sunLight.position.set(0, 5, -50);
+sunLight.castShadow = true;
+scene.add(sunLight);
+sunLight.shadow.mapSize.width = 2048;
+sunLight.shadow.mapSize.height = 2048;
+
+sunLight.shadow.camera.near = 0.5;
+sunLight.shadow.camera.far = 500;
+sunLight.shadow.camera.left = -50;
+sunLight.shadow.camera.right = 50;
+sunLight.shadow.camera.top = 50;
+sunLight.shadow.camera.bottom = -50;
+
+sunLight.shadow.bias = -0.0005; // fixes acne
+
+const ambientLight = new THREE.AmbientLight(0x404040, 0.5);
+scene.add(ambientLight);
+
+sunLight.intensity = 1;
+
+function animate() {
+  requestAnimationFrame(animate);
+  //Here we could add some code to update the scene, adding some automatic movement
+
+	const t = clock.getElapsedTime();
+
+	if(object){
+		if(object.scale){
+	object.scale.y = 1 + Math.sin(t * 2) * 0.1;
+  object.scale.x = 1 - Math.sin(t * 2) * 0.05;
+  object.scale.z = 1 - Math.sin(t * 2) * 0.05;
+		}
+	}
+
+  //Make the eye move
+  if (object && objToRender === "eye") {
+    //I've played with the constants here until it looked good 
+    object.rotation.y = -3 + mouseX / window.innerWidth * 3;
+    object.rotation.x = -1.2 + mouseY * 2.5 / window.innerHeight;
+  }
+  renderer.render(scene, camera);
+
+  updateSun()
+}
+updateSun()
+animate()
