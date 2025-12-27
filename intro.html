@@ -1,0 +1,230 @@
+<html>
+<style>
+	body {
+		background: rgb(40,40,40);
+	}
+	
+	@font-face {
+        font-family: 'main';
+        src: url('fonts/main.otf');
+    }
+	@font-face {
+        font-family: 'main_bold';
+        src: url('fonts/main_bold.ttf');
+    }
+	@font-face {
+        font-family: 'main_black';
+        src: url('fonts/main_black.otf');
+    }
+	
+    * {
+        font-family: main;
+		margin: 0;
+		color: white;
+    }
+	
+	header {
+		height: 50vh;
+		overflow: hidden;
+		position: relative;
+	}
+	
+	header img {
+		width: 110%;
+		height: 100%;
+		object-fit: cover;
+		object-position: center;
+		translate: 0vw;
+		animation: anim 15s linear infinite;
+	}
+	
+	@keyframes anim {
+		0% {
+			filter: brightness(0%);
+			translate: 0vw;
+		}
+		5% {
+			filter: brightness(100%);
+		}
+		45% {
+			filter: brightness(100%);
+		}
+		50% {
+			filter: brightness(0%);
+			translate: -10vw;
+		}
+		55% {
+			filter: brightness(100%);
+		}
+		95% {
+			filter: brightness(100%);
+		}
+		100% {
+			filter: brightness(0%);
+			translate: 0vw;
+		}
+	}
+	
+	header div {
+		width: 100%;
+		height: 50%;
+		background-image: linear-gradient(rgba(40,40,40,0), rgba(40,40,40,1));
+		bottom: 0%;
+		position: absolute;
+	}
+	
+	main {
+		position: absolute;
+		left: 50%;
+		top: 50%;
+		transform: translate(-50%, -50%);
+		display: grid;
+		gap: 10px;
+	}
+	
+	main > div {
+		display: flex;
+		width: max-content;
+		gap: 18px;
+		position: relative;
+		align-items: center;
+	}
+	
+	h3 {
+		font-family: main_bold
+	}
+	
+	#mainButton {
+		background-image: linear-gradient(rgb(100,100,200), rgb(25, 25, 120));
+		border-radius: 10px;
+		display: flex;
+		align-items: center;
+		gap: 10px;
+		justify-content: space-between;
+		min-width: 110px;
+		padding: 7px 15px;
+		cursor: pointer;
+	}
+	
+	#mainButton:hover {
+		filter: brightness(90%);
+	}
+	
+	#mainButton p {
+		font-family: main_bold;
+		text-shadow: 0px 2.5px 2px rgba(0,0,0,0.5);
+		text-align: center;
+		font-size: 80%;
+		width: 100%;
+	}
+	
+	#mainButton .svgs {
+		display: none;
+	}
+	
+	div > :has(h3) {
+		height: min-content;
+		width: min-content;
+		gap: 10px;
+		display: grid;
+	}
+	
+	#installedStatus {
+		position: absolute;
+		top: 100%;
+		display: none;
+	}
+	
+	aside {
+		display: flex;
+		gap: 5px;
+		width: max-content;
+		margin: auto;
+		cursor: pointer;
+	}
+	
+	aside p {
+		font-size: 70%;
+	}
+	
+	#checkbox {
+		filter: invert(1) !important;
+	}
+	
+	.svgs {
+		width: 15px;
+		height: 15px;
+		filter: invert(1) drop-shadow(0px 5px 2px rgba(0,0,0,0.3));
+	}
+	
+	@media (min-aspect-ratio: 1/1) {
+		main img {
+			height: 14vh;
+			width: auto;
+		}
+	}
+	
+	@media (max-aspect-ratio: 1/1) {
+		main img {
+			width: 14vw;
+			height: auto;
+		}
+	}
+</style>
+
+<body>
+	<header>
+		<img src="images/intro/pic1.png">
+		<div></div>
+	</header>
+	<main>
+		<div>
+			<div>
+				<img src="logo.png">
+			</div>
+			<div>
+				<h3>Demacorn</h3>
+				<div id="mainButton">
+					<p>PLAY</p>
+					<img class="svgs" src="images/svgs/cancel.svg">
+				</div>
+				<div id="installedStatus">
+					<img class="svgs" src="images/svgs/check.svg">
+					<p>Installed</p>
+				</div>
+			</div>
+		</div>
+		<aside>
+			<img id="checkbox" class="svgs" src="images/svgs/checkbox_unchecked.svg">
+			<p>Start the game automatically after installation</p>
+		</aside>
+	</main>
+</body>
+
+<script>
+	const mainButton = document.querySelector("#mainButton");
+	mainButton.onclick = function(){
+		const iframes = window.parent.document.getElementsByTagName('iframe');
+
+		for (let iframe of iframes) 
+			if (iframe.contentWindow === window) {
+				iframe.remove();
+				break;
+			}
+	}
+	
+	const aside = document.querySelector("aside");
+	const checkbox = document.querySelector("#checkbox");
+	let autoPlay = false;
+	aside.onclick = function(){
+		if(!autoPlay){
+			checkbox.setAttribute("src", "images/svgs/checkbox_checked.svg");
+			autoPlay = true;
+		}
+		else {
+			checkbox.setAttribute("src", "images/svgs/checkbox_unchecked.svg");
+			autoPlay = false;
+		}
+	}
+</script>
+</html>
