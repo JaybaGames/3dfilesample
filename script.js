@@ -57,41 +57,14 @@ let controls;
 
 //Set which object to render
 let objToRender = 'dino';
-
-let buttones = document.querySelector("#buttones");
-buttones.onclick = function(){
-	if(objToRender == 'dino')
-		objToRender = 'eye';
-	else
-		objToRender = 'dino';
 	
-	scene.remove(object)
-	
-	loader.load(
-		`./models/${objToRender}/scene.gltf`,
-		function (gltf) {
-			//If the file is loaded, add it to the scene
-			object = gltf.scene;
-			scene.add(object);
-		},
-		function (xhr) {
-			//While it is loading, log the progress
-			// console.log((xhr.loaded / xhr.total * 100) + '% loaded');
-		},
-		function (error) {
-			//If there is an error, log it
-			console.error(error);
-		}
-	);
-
-	camera.position.z = objToRender === "dino" ? 25 : 300;
-	
-	if (!document.fullscreenElement) {
-		document.documentElement.requestFullscreen();
-	} else {
-		document.exitFullscreen();
-	}
+/*
+if (!document.fullscreenElement) {
+	document.documentElement.requestFullscreen();
+} else {
+	document.exitFullscreen();
 }
+*/
 
 //Instantiate a loader for the .gltf file
 const loader = new GLTFLoader();
