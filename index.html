@@ -1,11 +1,12 @@
 <head>
-	<title>Farmee Game</title>
+	<title>Demacorn</title>
 	<link rel="icon" href="logo.png"/>
     <link rel="stylesheet" href="style.css" />
 	<link rel="manifest" href="manifest.json"/>
 </head>
 <body>
-
+	<iframe src="intro.html" style="position: fixed; z-index: 999; border: 0; width: 100%; height: 100%; top: 0%; left: 0%"></iframe>	
+	
 	<div id="installScreen" style="display:none;">
 	  <h2>Install Dino Game</h2>
 	  <p>Play offline. Fullscreen. Faster loading.</p>
@@ -15,10 +16,11 @@
     <main>
       <div id="container3D"></div>
     </main>
-	<button id="buttones">Change</button>
 	
 	<button class="worldButton" id="saveWorldBtn">Save World</button>
 	<button class="worldButton" id="loadWorldBtn">Load World</button>
+	
+
 </body>
 
 <script type="module" src="script.js"></script>
