@@ -25,7 +25,6 @@ header h1 {
 
 #buttones {
 	position: fixed;
-	z-index: 1000;
 	top: 100px;
 	right: 50px;
 	font-size: 135%;
@@ -33,10 +32,8 @@ header h1 {
 
 #installScreen {
 	position: fixed;
-	z-index: 1000;
 }
 
 .worldButton, #saveWorldBtn, #loadWorldBtn {
 	position: relative;
-	z-index: 100;
 }
