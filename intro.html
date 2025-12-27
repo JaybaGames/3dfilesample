@@ -1,4 +1,5 @@
-<html>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
 <style>
 	body {
 		background: rgb(40,40,40);
@@ -16,11 +17,16 @@
         font-family: 'main_black';
         src: url('fonts/main_black.otf');
     }
+	@font-face {
+        font-family: 'bebas';
+        src: url('fonts/bebas.ttf');
+    }
 	
     * {
         font-family: main;
 		margin: 0;
 		color: white;
+		user-select: none;
     }
 	
 	header {
@@ -88,10 +94,13 @@
 		gap: 18px;
 		position: relative;
 		align-items: center;
+		margin: auto;
 	}
 	
-	h3 {
-		font-family: main_bold
+	h1 {
+		font-family: main;
+		font-size: 160%;
+		font-weight: 500;
 	}
 	
 	#mainButton {
@@ -114,7 +123,6 @@
 		font-family: main_bold;
 		text-shadow: 0px 2.5px 2px rgba(0,0,0,0.5);
 		text-align: center;
-		font-size: 80%;
 		width: 100%;
 	}
 	
@@ -122,9 +130,9 @@
 		display: none;
 	}
 	
-	div > :has(h3) {
+	div > :has(h1) {
 		height: min-content;
-		width: min-content;
+		width: 200px;
 		gap: 10px;
 		display: grid;
 	}
@@ -141,14 +149,20 @@
 		width: max-content;
 		margin: auto;
 		cursor: pointer;
+		position: absolute;
+		bottom: 0%;
+		left: 50%;
+		transform: translateX(-50%);
+		opacity: 0;
+		transition: opacity 0.2s, bottom 0.2s;
 	}
 	
 	aside p {
-		font-size: 70%;
+		font-size: 80%;
 	}
 	
 	#checkbox {
-		filter: invert(1) !important;
+		filter: none !important;
 	}
 	
 	.svgs {
@@ -157,18 +171,57 @@
 		filter: invert(1) drop-shadow(0px 5px 2px rgba(0,0,0,0.3));
 	}
 	
+	footer {
+		width: min-content;
+		display: grid;
+		gap: 5px;
+		position: absolute;
+		bottom: 30px;
+		left: 50%;
+		transform: translateX(-50%);
+	}
+	
+	footer > p {
+		font-size: 60%;
+		font-family: main_bold;
+		margin: auto;
+		width: max-content;
+	}
+	
+	footer div {
+		display: flex;
+		align-items: center;
+		gap: 5px;
+	}
+	
+	footer div p {
+		font-family: bebas;
+		width: min-content;
+		line-height: 100%;
+		font-size: 120%;
+	}
+	
+	#info {
+		position: absolute;
+		right: 30px;
+		bottom: 30px;
+		cursor: pointer;
+	}
+	
+	#info:hover {
+		filter: brightness(120%);
+	}
+	
 	@media (min-aspect-ratio: 1/1) {
-		main img {
-			height: 14vh;
-			width: auto;
-		}
+		main img {height: 120px}
+		footer img {height: 40px}
+		#info {height: 30px}
 	}
 	
 	@media (max-aspect-ratio: 1/1) {
-		main img {
-			width: 14vw;
-			height: auto;
-		}
+		main img {width: 120px}
+		footer img {width: 40px}
+		#info {width: 30px}
 	}
 </style>
 
@@ -183,7 +236,7 @@
 				<img src="logo.png">
 			</div>
 			<div>
-				<h3>Demacorn</h3>
+				<h1>Demacorn</h1>
 				<div id="mainButton">
 					<p>PLAY</p>
 					<img class="svgs" src="images/svgs/cancel.svg">
@@ -199,6 +252,14 @@
 			<p>Start the game automatically after installation</p>
 		</aside>
 	</main>
+	<footer title="Credits to the development owner, Jayvee Erandio">
+		<p>Developed by</p>
+		<div>
+			<img src="images/intro/logo.png">
+			<p>PSYCHO TUMBLER</p>
+		</div>
+	</footer>
+	<img id="info" title="More Information" src="images/svgs/info.svg">
 </body>
 
 <script>
@@ -227,4 +288,3 @@
 		}
 	}
 </script>
-</html>
