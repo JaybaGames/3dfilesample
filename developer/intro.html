@@ -68,7 +68,7 @@
 		width: 100%;
 		height: 50%;
 		background-image: linear-gradient(rgba(40,40,40,0), rgba(40,40,40,1));
-		bottom: 0%;
+		bottom: -2%;
 		position: absolute;
 	}
 	
@@ -92,19 +92,19 @@
 	
 	h1 {
 		font-family: main;
-		font-size: 160%;
+		font-size: 140%;
 		font-weight: 500;
 	}
 	
 	#mainButton {
 		background-image: linear-gradient(rgb(100,100,200), rgb(25, 25, 120));
-		border-radius: 10px;
+		border-radius: 5px;
 		display: flex;
 		align-items: center;
 		gap: 10px;
 		justify-content: space-between;
 		min-width: 110px;
-		padding: 7px 15px;
+		padding: 5px 12px;
 		cursor: pointer;
 	}
 	
@@ -117,6 +117,7 @@
 		text-shadow: 0px 2.5px 2px rgba(0,0,0,0.5);
 		text-align: center;
 		width: 100%;
+		font-size: 80%;
 	}
 	
 	#mainButton .svgs {
@@ -125,8 +126,8 @@
 	
 	div > :has(h1) {
 		height: min-content;
-		width: 200px;
-		gap: 10px;
+		width: 140px;
+		gap: 5px;
 		display: grid;
 	}
 	
@@ -169,7 +170,7 @@
 		display: grid;
 		gap: 5px;
 		position: absolute;
-		bottom: 30px;
+		bottom: 5vh;
 		left: 50%;
 		transform: translateX(-50%);
 	}
@@ -191,7 +192,6 @@
 		font-family: bebas;
 		width: min-content;
 		line-height: 100%;
-		font-size: 120%;
 	}
 	
 	#info {
@@ -206,15 +206,15 @@
 	}
 	
 	@media (min-aspect-ratio: 1/1) {
-		main img {height: 120px}
-		footer img {height: 40px}
-		#info {height: 30px}
+		main img {height: 70px}
+		footer img {height: 30px}
+		#info {height: 21px}
 	}
 	
 	@media (max-aspect-ratio: 1/1) {
-		main img {width: 120px}
-		footer img {width: 40px}
-		#info {width: 30px}
+		main img {width: 70px}
+		footer img {width: 30px}
+		#info {width: 21px}
 	}
 </style>
 
@@ -279,11 +279,11 @@
 	let autoPlay = false;
 	aside.onclick = function(){
 		if(!autoPlay){
-			checkbox.setAttribute("src", "images/svgs/checkbox_checked.svg");
+			checkbox.setAttribute("src", "icons/checkbox_checked.svg");
 			autoPlay = true;
 		}
 		else {
-			checkbox.setAttribute("src", "images/svgs/checkbox_unchecked.svg");
+			checkbox.setAttribute("src", "icons/checkbox_unchecked.svg");
 			autoPlay = false;
 		}
 	}
