@@ -1,32 +1,10 @@
-let installPrompt = null;
-
-window.addEventListener('beforeinstallprompt', (e) => {
-  e.preventDefault(); // prevent browser mini-banner
-  installPrompt = e;
-
-  // Show your install screen or button
-  document.getElementById('installScreen').style.display = 'block';
-});
-
-document.getElementById('installBtn').addEventListener('click', async () => {
-  if (!installPrompt) return;
-
-  installPrompt.prompt(); // opens browser install dialog
-  const result = await installPrompt.userChoice;
-
-  if (result.outcome === 'accepted') {
-    console.log('User installed the app');
-  } else {
-    console.log('User dismissed install');
-  }
-
-  installPrompt = null;
-});
-
-
-
-
-
+/*
+if (window.matchMedia('(display-mode: standalone)').matches || window.matchMedia('(display-mode: fullscreen)').matches) {
+    console.log("App is installed (standalone mode)!");
+} else {
+    console.log("App is running in browser, not installed.");
+}
+*/
 
 //Import the THREE.js library
 import * as THREE from "./three.module.js";
