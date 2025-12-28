@@ -1,6 +1,6 @@
 {
-  "name": "Farmee Game",
-  "short_name": "Farmee",
+  "name": "Demacorn Game",
+  "short_name": "Demacorn",
   "start_url": "./index.html",
   "display": "fullscreen",
   "orientation": "landscape",
