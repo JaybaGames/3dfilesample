@@ -58,6 +58,24 @@ loader.load(
     if (child.isMesh) {
       child.castShadow = true;
       child.receiveShadow = true; // optional
+	  
+	  /*
+		var mesh = child;
+		const pos = mesh.geometry.attributes.position;
+
+		for (let i = 0; i < pos.count; i++) {
+			const x = pos.getX(i);
+			const y = pos.getY(i);
+			const z = pos.getZ(i);
+
+			// Example deformation
+			//pos.setY(i, y + Math.sin(x * 2) * 0.1);
+			pos.setY(i, y*1.5);
+		}
+
+		pos.needsUpdate = true;
+		mesh.geometry.computeVertexNormals();
+		*/
     }
   });
 	
@@ -233,7 +251,7 @@ function updateSun() {
 }
 
 const sunLight = new THREE.DirectionalLight(0xffffff, 1);
-sunLight.position.set(0, 5, -50);
+sunLight.position.set(10, 8, -30);
 sunLight.castShadow = true;
 scene.add(sunLight);
 sunLight.shadow.mapSize.width = 2048;
@@ -259,13 +277,13 @@ function animate() {
 
 	const t = clock.getElapsedTime();
 
-	if(object){
-		if(object.scale){
-	object.scale.y = 1 + Math.sin(t * 2) * 0.1;
-  object.scale.x = 1 - Math.sin(t * 2) * 0.05;
-  object.scale.z = 1 - Math.sin(t * 2) * 0.05;
-		}
-	}
+	//if(object){
+	//	if(object.scale){
+	//object.scale.y = 1 + Math.sin(t * 2) * 0.1;
+ // object.scale.x = 1 - Math.sin(t * 2) * 0.05;
+ // object.scale.z = 1 - Math.sin(t * 2) * 0.05;
+	//	}
+	//}
 
   //Make the eye move
   if (object && objToRender === "eye") {
@@ -279,4 +297,3 @@ function animate() {
 }
 updateSun()
 animate()
-
