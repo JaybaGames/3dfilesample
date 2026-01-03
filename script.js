@@ -34,7 +34,7 @@ let object;
 let controls;
 
 //Set which object to render
-let objToRender = 'dino';
+let objToRender = 'sprout_small';
 	
 /*
 if (!document.fullscreenElement) {
@@ -93,9 +93,9 @@ scene.add(topLight);
 
 
 //This adds controls to the camera, so we can rotate / zoom it with the mouse
-if (objToRender === "dino") {
+
   controls = new OrbitControls(camera, renderer.domElement);
-}
+
 
 const clock = new THREE.Clock();
 //Render the scene
@@ -201,11 +201,11 @@ sky.scale.setScalar(10000);
 scene.add(sky);
 
 const planeG = new THREE.PlaneGeometry(100, 100);
-const planeM = new THREE.MeshStandardMaterial({color: "brown"});
+const planeM = new THREE.MeshStandardMaterial({color: "#43f"});
 planeM.side = THREE.DoubleSide;
 const plane = new THREE.Mesh(planeG, planeM);
 plane.rotation.x = Math.PI/2;
-plane.position.y = -5;
+plane.position.y = 3;
 plane.receiveShadow = true;
 scene.add(plane);
 
