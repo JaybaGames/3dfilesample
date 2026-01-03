@@ -201,11 +201,11 @@ sky.scale.setScalar(10000);
 scene.add(sky);
 
 const planeG = new THREE.PlaneGeometry(100, 100);
-const planeM = new THREE.MeshStandardMaterial({color: "#43f"});
+const planeM = new THREE.MeshStandardMaterial({color: "#430"});
 planeM.side = THREE.DoubleSide;
 const plane = new THREE.Mesh(planeG, planeM);
 plane.rotation.x = Math.PI/2;
-plane.position.y = 3;
+plane.position.y = 0;
 plane.receiveShadow = true;
 scene.add(plane);
 
@@ -279,3 +279,4 @@ function animate() {
 }
 updateSun()
 animate()
+
