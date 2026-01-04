@@ -232,7 +232,7 @@ const planeM = new THREE.MeshStandardMaterial({color: "#430"});
 planeM.side = THREE.DoubleSide;
 const plane = new THREE.Mesh(planeG, planeM);
 plane.rotation.x = Math.PI/2;
-plane.position.y = 0;
+plane.position.y = 0.5;
 plane.receiveShadow = true;
 scene.add(plane);
 
@@ -279,30 +279,25 @@ const ambientLight = new THREE.AmbientLight(0x404040, 0.5);
 scene.add(ambientLight);
 
 function animate() {
-  requestAnimationFrame(animate);
-  //Here we could add some code to update the scene, adding some automatic movement
+requestAnimationFrame(animate);
 
 	const t = clock.getElapsedTime();
 
-	for(let object of scene.children){
+	for(let object of scene.children)
 		if(object.children)
-			for(let mesh of object.children)
+			for(let mesh of object.children){
 				if(mesh.children)
 					for(let submesh of mesh.children)
 						if(submesh.animate)
-							submesh.animate.wind()		
-						
-	}
+							submesh.animate.wind()	
+				if(mesh.animate)
+					mesh.animate.wind()
+			}						
+		
+	renderer.render(scene, camera);
 
-  //Make the eye move
-  if (object && objToRender === "eye") {
-    //I've played with the constants here until it looked good 
-    object.rotation.y = -3 + mouseX / window.innerWidth * 3;
-    object.rotation.x = -1.2 + mouseY * 2.5 / window.innerHeight;
-  }
-  renderer.render(scene, camera);
-
-  updateSun()
+	updateSun()
 }
+
 updateSun()
 animate()
