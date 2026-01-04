@@ -53,7 +53,7 @@ let tae;
 loader.load(
   `./models/${objToRender}/scene.gltf`,
   function (gltf) {
-    //If the file is loaded, add it to the scene
+
     object = gltf.scene;
 
 	object.traverse((child) => {
@@ -64,7 +64,7 @@ loader.load(
 				if(this.windStat >= 359)
 					this.windStat -= 359
 				else
-					this.windStat += 1.5;
+					this.windStat += 5;
 				
 				const pos = child.geometry.attributes.position;
 
@@ -88,9 +88,9 @@ loader.load(
 		child.castShadow = true;
 		child.receiveShadow = true;
 	  
-		scene.add(child)
+		//scene.add(child)
     }
-	
+	scene.add(object);
 	
   });
 	
@@ -285,8 +285,13 @@ function animate() {
 	const t = clock.getElapsedTime();
 
 	for(let object of scene.children){
-		if(object.animate)
-			object.animate.wind()
+		if(object.children)
+			for(let mesh of object.children)
+				if(mesh.children)
+					for(let submesh of mesh.children)
+						if(submesh.animate)
+							submesh.animate.wind()		
+						
 	}
 
   //Make the eye move
