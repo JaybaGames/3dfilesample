@@ -115,22 +115,17 @@ renderer.shadowMap.type = THREE.PCFSoftShadowMap; // soft & realistic
 document.getElementById("container3D").appendChild(renderer.domElement);
 
 //Set how far the camera will be from the 3D model
-camera.position.set(20, 15, -15);
+camera.position.set(-12, 6, 25);
 
 //Add lights to the scene, so we can actually see the 3D model
-const topLight = new THREE.DirectionalLight(0xffffff, 1); // (color, intensity)
-topLight.position.set(500, 500, 500) //top-left-ish
+const topLight = new THREE.DirectionalLight(0xffffff, 1);
+topLight.position.set(500, 500, 500)
 topLight.castShadow = true;
 scene.add(topLight);
 
-
-//This adds controls to the camera, so we can rotate / zoom it with the mouse
-
-  controls = new OrbitControls(camera, renderer.domElement);
-
+controls = new OrbitControls(camera, renderer.domElement);
 
 const clock = new THREE.Clock();
-//Render the scene
 
 
 //Add a listener to the window, so we can resize the window and the camera
@@ -264,26 +259,24 @@ function updateSun() {
 
 }
 
-const sunLight = new THREE.DirectionalLight(0xffffff, 1);
-sunLight.position.set(10, 8, -30);
+const sunLight = new THREE.DirectionalLight(0xffffaa, 2);
+sunLight.position.set(0, 8, -20);
 sunLight.castShadow = true;
 scene.add(sunLight);
-sunLight.shadow.mapSize.width = 2048;
-sunLight.shadow.mapSize.height = 2048;
+sunLight.shadow.mapSize.width = 4000;
+sunLight.shadow.mapSize.height = 4000;
 
 sunLight.shadow.camera.near = 0.5;
-sunLight.shadow.camera.far = 500;
-sunLight.shadow.camera.left = -50;
-sunLight.shadow.camera.right = 50;
-sunLight.shadow.camera.top = 50;
-sunLight.shadow.camera.bottom = -50;
+sunLight.shadow.camera.far = 120;
+sunLight.shadow.camera.left = -15;
+sunLight.shadow.camera.right = 15;
+sunLight.shadow.camera.top = 35;
+sunLight.shadow.camera.bottom = -35;
 
 sunLight.shadow.bias = -0.0005; // fixes acne
 
 const ambientLight = new THREE.AmbientLight(0x404040, 0.5);
 scene.add(ambientLight);
-
-sunLight.intensity = 1;
 
 function animate() {
   requestAnimationFrame(animate);
