@@ -47,39 +47,53 @@ if (!document.fullscreenElement) {
 //Instantiate a loader for the .gltf file
 const loader = new GLTFLoader();
 
+let tae;
+
 //Load the file
 loader.load(
   `./models/${objToRender}/scene.gltf`,
   function (gltf) {
     //If the file is loaded, add it to the scene
     object = gltf.scene;
-	
+
 	object.traverse((child) => {
     if (child.isMesh) {
-      child.castShadow = true;
-      child.receiveShadow = true; // optional
+		child.animate = {
+			windStat: 90,
+			wind: function(){
+				if(this.windStat >= 359)
+					this.windStat -= 359
+				else
+					this.windStat += 1.5;
+				
+				const pos = child.geometry.attributes.position;
+
+				for (let i = 0; i < pos.count; i++) {
+					const x = pos.getX(i);
+					const y = pos.getY(i);
+					const z = pos.getZ(i);
+
+					//Main Deformation Animation Program
+					const temp = Math.sin(this.windStat*(Math.PI/180))*y*0.001;
+					pos.setX(i, x + temp)
+					pos.setZ(i, z + temp)
+					if(this.windStat != 90 && this.windStat != 270)
+						pos.setY(i, y + (Math.sin(this.windStat*(Math.PI/90))*0.0003*y))
+				}
+		
+				pos.needsUpdate = true;
+				child.geometry.computeVertexNormals();
+			}
+		};
+		child.castShadow = true;
+		child.receiveShadow = true;
 	  
-	  /*
-		var mesh = child;
-		const pos = mesh.geometry.attributes.position;
-
-		for (let i = 0; i < pos.count; i++) {
-			const x = pos.getX(i);
-			const y = pos.getY(i);
-			const z = pos.getZ(i);
-
-			// Example deformation
-			//pos.setY(i, y + Math.sin(x * 2) * 0.1);
-			pos.setY(i, y*1.5);
-		}
-
-		pos.needsUpdate = true;
-		mesh.geometry.computeVertexNormals();
-		*/
+		scene.add(child)
     }
+	
+	
   });
 	
-    scene.add(object);
   },
   function (xhr) {
     //While it is loading, log the progress
@@ -101,7 +115,7 @@ renderer.shadowMap.type = THREE.PCFSoftShadowMap; // soft & realistic
 document.getElementById("container3D").appendChild(renderer.domElement);
 
 //Set how far the camera will be from the 3D model
-camera.position.z = objToRender === "dino" ? 25 : 300;
+camera.position.set(20, 15, -15);
 
 //Add lights to the scene, so we can actually see the 3D model
 const topLight = new THREE.DirectionalLight(0xffffff, 1); // (color, intensity)
@@ -277,13 +291,10 @@ function animate() {
 
 	const t = clock.getElapsedTime();
 
-	//if(object){
-	//	if(object.scale){
-	//object.scale.y = 1 + Math.sin(t * 2) * 0.1;
- // object.scale.x = 1 - Math.sin(t * 2) * 0.05;
- // object.scale.z = 1 - Math.sin(t * 2) * 0.05;
-	//	}
-	//}
+	for(let object of scene.children){
+		if(object.animate)
+			object.animate.wind()
+	}
 
   //Make the eye move
   if (object && objToRender === "eye") {
